@@ -20,3 +20,10 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+// Route::get('/today', function () {
+//     $test_1 = 1;
+//     return view('dashboard')->with('test_1',$test_1);
+// });
+
+Route::get('/today',  'App\Http\Controllers\ReservationController@index_all');
