@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //今日の予約状況とデフォルト登録日かどうかを確認
+        //自分の列がどこか
+        //なかったら一番下に追加
+        $reservations = [['user_name','gozen','gogo'],['aaa',1,1]];
+        return view('home')->with('reservations',$reservations);
     }
 }
