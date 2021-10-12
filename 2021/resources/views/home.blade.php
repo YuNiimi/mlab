@@ -35,15 +35,7 @@
 
                             </tbody>
                         </table>
-                        <div class="form-group row">
-  {{Form::label('hoge', '（ラベル名称）', ['class' => 'col-md-3 col-form-label'])}}
-  {{Form::text('hoge', old('hoge'), ['class' => 'col-md-9 form-control'])}}
-  @if($errors->has('hoge'))
-    @foreach($errors->get('hoge') as $message)
-      <p class="offset-3 col-md-9 alert alert-danger">{{ $message }}</p>
-    @endforeach
-  @endif
-</div>
+                       
 
                     </div>
 
