@@ -37,4 +37,20 @@ class HomeController extends Controller
         $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$today)->first();
         return view('home')->with(['reservations'=>$reservations,'my_reservation'=>$my_reservation]);
     }
+
+    public function reserve(Request $request){
+        $AM = $request->input('AM');
+        $PM = $request->input('PM');
+        $user = Auth::id();
+        $today = Carbon::today();
+        if($AM=='on')$AM=1;else $AM=0;
+        if($PM=='on')$PM=1;else $PM=0;
+        Reservation::updateOrCreate(
+            ['user_id'=>$user,'date'=>$today],
+            ['AM'=>$AM,'PM'=>$PM]
+        );
+        
+        return redirect('/home')->with('flash_message', '登録完了');
+
+    }
 }

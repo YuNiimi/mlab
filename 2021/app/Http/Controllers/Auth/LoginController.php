@@ -57,6 +57,14 @@ class LoginController extends Controller
         $user = new User;
         $user->name = $gUser->name;
         $user->email = $gUser->email;
+        if(strpos($user->email,'@ccmailg.meijo-u.ac.jp')=== false)
+        {
+            echo("<h2>");
+            echo('</br>指定されたメールアドレスを用いてください</br>');
+            echo('<button type="button" onclick="history.back()">戻る</button>');
+            echo("</h2>");
+            return ;
+        }
         // $user = User::where('email',$email)->first;
         User::updateOrCreate(['name'=>$user->name,'email'=>$user->email]);
         $login_user = User::where('email',$user->email)->first();
