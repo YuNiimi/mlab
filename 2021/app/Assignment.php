@@ -4,16 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class Assignment extends Model
 {
     protected $fillable = [
         'user_id',
-        'date',
-        'AM',
-        'PM',
+        'assignment'
     ];
-
-    public $timestamps = true;
 
     //belongsTo設定
     public function user()

@@ -18,7 +18,7 @@ class ReservationTableSeeder extends Seeder
 
         for($i=1;$i<4;$i++){
             Reservation::insert(
-                ['user_id'=> $i,'date'=>$date,'AM' => $i%2,'PM'=>0,'Bulk'=>0]
+                ['user_id'=> $i,'date'=>$date,'AM' => $i%2,'PM'=>0]
             );
         }
     }
