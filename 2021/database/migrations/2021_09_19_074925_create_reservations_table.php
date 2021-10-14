@@ -14,9 +14,11 @@ class CreateReservationsTable extends Migration
     public function up()
     {
         Schema::create('reservations', function (Blueprint $table) {
-            $table->unique(['user_id', 'date']);
-
-            $table->bigIncrements('user_id');
+            $table->unique('user_id','date');
+            $table->bigIncrements ('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            
             $table->date('date');
             $table->boolean('AM')->default(0);
             $table->boolean('PM')->default(0);
