@@ -19,6 +19,24 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <link href="{{ asset('fullcalendar/main.css') }}" rel='stylesheet' />
+    <script src="{{ asset('fullcalendar/main.js') }}"></script>
+    <!-- <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+    </script> -->
+    <!-- カレンダー追加css -->
+    <style>
+        .fc-theme-standard{
+            height:600px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

@@ -20,5 +20,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::post('home','HomeController@reserve');
+
+// 日にちパラメータ
+Route::get('/home/{date}', 'HomeController@date')->name('home')->middleware('auth');
+
 Route::get('login/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('login/google/callback', 'Auth\LoginController@handleGoogleCallback');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Reservation;
+use App\Assignment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +37,29 @@ class HomeController extends Controller
         })->get();
         $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$today)->first();
         return view('home')->with(['reservations'=>$reservations,'my_reservation'=>$my_reservation]);
+    }
+
+    public function date($date){
+        $id = Auth::id();
+
+        $today = $date;
+        $reservations = Reservation::where('user_id','!=',$id)->with('user')->where('date',$today)
+        ->where(function($query){
+            $query->where('AM',1)->orWhere('PM',1);
+        })->get();
+        $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$today)->first();
+        //stateチェック（登録可能かどうか：固定枠と日付から）
+        $state = "";
+        if(Carbon::today() > $today){
+            $assignments = Assignment::where("use_id",$id)->first()->toArray();;
+            $assignments = $assignments["assignments"];
+            $assignments = array_chunk($assignments);
+
+            foreach($assignments as $assignment){
+
+            }
+        }
+        return view('home')->with(['reservations'=>$reservations,'my_reservation'=>$my_reservation,'date'=>$date,'state'=>$state]);
     }
 
     public function reserve(Request $request){
