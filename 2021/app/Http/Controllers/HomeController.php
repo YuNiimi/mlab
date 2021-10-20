@@ -29,43 +29,50 @@ class HomeController extends Controller
     {
         //今日の予約状況とデフォルト登録日かどうかを確認
         $today = Carbon::today();
+        $date = $today;
         //リレーション（ユーザテーブル）、今日 AND 自分以外 AND ( AMまたはPMが1) 
         $id = Auth::id();
-        $reservations = Reservation::where('user_id','!=',$id)->with('user')->where('date',$today)
+        $reservations = Reservation::where('user_id','!=',$id)->with('user')->where('date',$date)
         ->where(function($query){
             $query->where('AM',1)->orWhere('PM',1);
         })->get();
-        $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$today)->first();
-        return view('home')->with(['reservations'=>$reservations,'my_reservation'=>$my_reservation]);
+        $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$date)->first();
+        $state = 1;
+        return view('home')->with(['reservations'=>$reservations,'my_reservation'=>$my_reservation,'date'=>$date,'state' => $state]);
     }
 
     public function date($date){
+        $date = new Carbon($date);
         $id = Auth::id();
 
-        $today = $date;
-        $reservations = Reservation::where('user_id','!=',$id)->with('user')->where('date',$today)
+        $reservations = Reservation::where('user_id','!=',$id)->with('user')->where('date',$date)
         ->where(function($query){
             $query->where('AM',1)->orWhere('PM',1);
         })->get();
-        $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$today)->first();
+        $my_reservation = Reservation::with('user')->where('user_id',$id)->where('date',$date)->first();
         //stateチェック（登録可能かどうか：固定枠と日付から）
         $state = "";
-        if(Carbon::today() > $today){
-            $assignments = Assignment::where("use_id",$id)->first()->toArray();;
-            $assignments = $assignments["assignments"];
-            $assignments = array_chunk($assignments);
 
-            foreach($assignments as $assignment){
+        $assignments = Assignment::where("user_id",$id)->first()->toArray();
+        $assignments = $assignments["assignments"];
+        dd($assignments);
 
-            }
+
+        if(Carbon::today() > $date){
+
+            // foreach($assignments as $assignment){
+            //     $assignment = str_split($assignment);
+            // }
         }
-        return view('home')->with(['reservations'=>$reservations,'my_reservation'=>$my_reservation,'date'=>$date,'state'=>$state]);
+        return view('home')->with(['date'=>$date,'reservations'=>$reservations,'my_reservation'=>$my_reservation,'date'=>$date,'state'=>$state]);
     }
 
     public function reserve(Request $request){
         $AM = $request->input('AM');
         $PM = $request->input('PM');
         $user = Auth::id();
+        
+        //日付受け取り＋その日付に遷移すること
         $today = Carbon::today();
         if($AM=='on')$AM=1;else $AM=0;
         if($PM=='on')$PM=1;else $PM=0;

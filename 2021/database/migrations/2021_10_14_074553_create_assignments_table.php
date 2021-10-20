@@ -16,7 +16,8 @@ class CreateAssignmentsTable extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            // ユーザ追加前にシーダーで作成
+            // $table->foreign('user_id')->references('id')->on('users');
             $table->string('assignment');
             $table->timestamps();
         });

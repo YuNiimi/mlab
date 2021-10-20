@@ -6,7 +6,7 @@
         <div class="w-100 row">
             <div class="col-sm-6">
                 <div class="card mx-auto" style="max-width:600px;">
-                    <div class="card-header">{{ \Carbon\Carbon::now()->format("Y/m/d") }}　利用状況</div>
+                    <div class="card-header">{{ $date->format("Y/m/d") }}　利用状況</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -213,13 +213,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
+    <?php
+        if($date)echo "now: '".$date."',";
+        ?>
     dateClick: function(info) {
-    // alert('Clicked on: ' + info.dateStr);
-    // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-    // alert('Current view: ' + info.view.type);
-    // change the day's background color just for fun
     info.dayEl.style.backgroundColor = 'red';
-    location.href = location.href+"/"+info.dateStr;
+    location.href ="/home/"+info.dateStr;
   }
   });
   calendar.render();
